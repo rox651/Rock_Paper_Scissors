@@ -1,0 +1,322 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+@mixin border($gradient, $shadow, $tamano) {
+  position: relative;
+  width: $tamano;
+  border-radius: 50%;
+  background: linear-gradient($gradient);
+  height: $tamano;
+  box-shadow: 0px 5px 2px $shadow;
+  cursor: pointer;
+  &:hover {
+    background: linear-gradient($gradient/0);
+    box-shadow: 0px 0px 20px $shadow/.8;
+  }
+}
+
+$family: "Barlow Semi Condensed", sans-serif;
+$ScissorsGradient: hsl(39, 89%, 49%), hsl(40, 84%, 53%);
+$PaperGradient: hsl(230, 89%, 62%), hsl(230, 89%, 65%);
+$RockGradient: hsl(349, 71%, 52%), hsl(349, 70%, 56%);
+$LizardGradient: hsl(261, 73%, 60%), hsl(261, 72%, 63%);
+$Cyan: hsl(189, 59%, 53%), hsl(189, 58%, 57%);
+
+$DarkText: hsl(229, 25%, 31%);
+$ScoreText: hsl(229, 64%, 46%);
+$HeaderOutline: hsl(217, 16%, 45%);
+
+$RadialGradient: hsl(214, 47%, 23%), hsl(237, 49%, 15%);
+body {
+  background: linear-gradient($RadialGradient);
+  font-family: $family;
+  max-width: 1400px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.score {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid $HeaderOutline;
+  border-radius: 15px;
+  padding: 22px;
+  margin: 20px auto;
+
+  &__points {
+    text-align: center;
+    width: 125px;
+    height: 100px;
+    background-color: #fff;
+    border-radius: 8px;
+
+    h3 {
+      letter-spacing: 2px;
+      margin-top: 12px;
+      font-size: 0.8rem;
+      color: $ScoreText;
+    }
+    h2 {
+      font-size: 3rem;
+      color: $DarkText;
+    }
+  }
+}
+
+.game {
+  background-image: url(../images/bg-triangle.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0 auto;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 70px;
+
+  &__btn {
+    margin: 10% auto;
+    position: relative;
+    width: 80%;
+    background: linear-gradient($DarkText/.24);
+    border-radius: 50%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 40%;
+    }
+  }
+}
+
+.rules {
+  position: absolute;
+  z-index: 20;
+  background-color: transparent;
+  border: 1px solid $HeaderOutline;
+  color: #fff;
+  font-family: $family;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 8px 30px;
+  border-radius: 7px;
+  bottom: 0;
+  right: 20px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 0px 20px $HeaderOutline;
+  }
+}
+
+.back{
+  visibility: hidden;
+  position: absolute;
+  width: 98vw;
+  height: 100vh;
+  background-color: #08103a7c;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  .modal{
+    width: 300px;
+    height: 300px;
+    background-color: #fff;
+    border-radius: 10px;
+    &__text{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      
+      img{
+        cursor: pointer;
+        &:hover{
+          filter: brightness(0%);
+        }
+      }
+    }
+    &__image{
+      width: 80%;
+      margin: 0 auto;
+      img{
+        width: 100%;
+      }
+    }
+  }
+}
+
+.border.paper.invisible,
+.border.scissors.invisible,
+.border.rock.invisible {
+  display: none;
+}
+
+.results {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  color: #fff;
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  .newChoose[data-choice="paper"],
+  .pageChoose[data-choice="paper"] {
+    @include border($PaperGradient, #2f48c2, 200px);
+    cursor: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .newChoose[data-choice="rock"],
+  .pageChoose[data-choice="rock"] {
+    @include border($RockGradient, #a3243c, 200px);
+
+    cursor: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .newChoose[data-choice="scissors"],
+  .pageChoose[data-choice="scissors"] {
+    @include border($ScissorsGradient, #ad8128, 200px);
+    cursor: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .res {
+    margin: 10% auto;
+    position: relative;
+    width: 80%;
+    background: linear-gradient($DarkText/.24);
+    border-radius: 50%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.results.hidden {
+  display: flex;
+}
+
+.game.hidden {
+  display: none;
+}
+
+.again.hidden {
+  display: block;
+}
+
+.again {
+  margin: 50px;
+  width: 200px;
+  height: max-content;
+  color: #fff;
+  text-align: center;
+  display: none;
+  h1 {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+  button {
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .score {
+    margin: 30px 40px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .score {
+    width: 70%;
+  }
+  .border.paper {
+    @include border($PaperGradient, #2f48c2, 150px);
+  }
+  .border.scissors {
+    @include border($ScissorsGradient, #ad8128, 150px);
+  }
+  .border.rock {
+    @include border($RockGradient, #a3243c, 150px);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .score {
+    width: 80%;
+  }
+  .border.paper {
+    @include border($PaperGradient, #2f48c2, 120px);
+  }
+  .border.scissors {
+    @include border($ScissorsGradient, #ad8128, 120px);
+  }
+  .border.rock {
+    @include border($RockGradient, #a3243c, 120px);
+  }
+
+  .results {
+    flex-wrap: wrap;
+  }
+
+  .again {
+    h1 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+    order: 3;
+  }
+}
+
+@media screen and(max-width:500px) {
+  .back{
+    .modal{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      &__text{
+        flex-direction: column;
+        justify-content: space-around;
+        font-size: 30px;
+        img{
+          margin: 10px;
+          width: 10%;
+        }
+      }
+      
+    }
+  }
+}
+
+@media screen and (max-width:450px) {
+  .game{
+    width: auto;
+  }
+}
